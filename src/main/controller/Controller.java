@@ -3,6 +3,7 @@ package main.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -34,7 +35,7 @@ public class Controller implements Observer {
 
     @FXML
     void OpenServerOnMouseClicked(MouseEvent event) {
-        byte[] ipBytes = {(byte)192,(byte)168,(byte)0, (byte)13 };
+        byte[] ipBytes = {(byte)192,(byte)168,(byte)1, (byte)72};
         InetAddress ip = null;
         try {
             ip = InetAddress.getByAddress(ipBytes);
@@ -48,6 +49,10 @@ public class Controller implements Observer {
             Server server = new Server(serverSocket);
             server.addObserver(this);
             new Thread(server).start();
+            TextArea log = new TextArea();
+            ThreadServer serverR = new ThreadServer(serverSocket, log);
+            serverR.addObserver(this);
+            new Thread(serverR).start();
         } catch (IOException e) {
             e.printStackTrace();
         }

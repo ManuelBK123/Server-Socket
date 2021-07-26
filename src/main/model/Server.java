@@ -26,10 +26,7 @@ public class Server extends Observable implements Runnable{
             catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
-
     }
 
 }
